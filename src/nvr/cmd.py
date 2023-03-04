@@ -86,7 +86,7 @@ def norm_addition_args(addition_args):
       addition_args)
 
 
-if __name__ == '__main__':
+def main():
   args = parse_arguments()
 
   if args.debug > 0:
@@ -117,3 +117,6 @@ if __name__ == '__main__':
 
   logging.debug('running cmd line:%s' % cmd_line)
   subprocess.run(cmd_line, check=True, shell=False)
+
+if __name__ == '__main__':
+  main()
