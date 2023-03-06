@@ -5,14 +5,9 @@ import os
 import sys
 
 import argparse
-import datetime
 import logging
 import pathlib
-import queue
-import re
 import subprocess
-
-from multiprocessing import Process, JoinableQueue, Queue, Value, freeze_support, set_start_method
 
 
 def parse_arguments():
@@ -67,8 +62,9 @@ def get_server_name(args):
 def find_server(server_name):
   cmd_line = ['nvim', '--server', server_name, '--remote-expr', 'version']
 
+  logging.debug('find_server, cmd line:%s' % cmd_line)
   try:
-    proc = subprocess.run(cmd_line, check=True, capture_output=True)
+    proc = subprocess.run(cmd_line, check=True, capture_output=True, timeout=3)
     logging.debug('remote version:%s' % proc.stdout)
   except subprocess.CalledProcessError:
     return False
@@ -117,6 +113,7 @@ def main():
 
   logging.debug('running cmd line:%s' % cmd_line)
   subprocess.run(cmd_line, check=True, shell=False)
+
 
 if __name__ == '__main__':
   main()
