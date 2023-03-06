@@ -68,6 +68,8 @@ def find_server(server_name):
     logging.debug('remote version:%s' % proc.stdout)
   except subprocess.CalledProcessError:
     return False
+  except subprocess.TimeoutExpired:
+    return False
   return True
 
 
